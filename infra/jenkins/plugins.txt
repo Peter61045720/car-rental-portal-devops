@@ -1,0 +1,5 @@
+locale
+git
+nodejs
+workflow-aggregator
+docker-workflow
