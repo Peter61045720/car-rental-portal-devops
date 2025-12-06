@@ -1,7 +1,7 @@
 # Build image:
 # docker build -t car-rental-portal-server .
 
-# Run image:
+# Run container:
 # docker run -it -p 5000:5000 --rm car-rental-portal-server
 FROM node:22-alpine
 WORKDIR /app

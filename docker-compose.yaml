@@ -1,0 +1,32 @@
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: car-rental-server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    networks:
+      - car-rental-network
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: car-rental-client
+    ports:
+      - "8100:8100"
+    environment:
+      - API_URL=http://car-rental-server:5000
+    depends_on:
+      - server
+    networks:
+      - car-rental-network
+    restart: unless-stopped
+
+networks:
+  car-rental-network:
+    driver: bridge
