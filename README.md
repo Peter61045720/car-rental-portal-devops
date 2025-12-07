@@ -77,6 +77,30 @@ A Tool-ok közül mindenképp szükséged lesz egy `node22` nevű NodeJS-re.
 
 A CI/CD Pipeline kliens és szerver projekthez GitHub SCM segítségével készült. Mind a client, mind a server rendelkezik a saját Jenkinsfile-lal, ezeket kell megadni a pipeline-ok elkészítésekor.
 
+### Terraform
+
+A Terraform segítségével is el lehet indítani a projektet:
+
+Navigálj ebbe a mappába:
+
+```
+cd infra/terraform
+```
+
+Majd inicializáld a szükséges provider-eket:
+
+```
+terraform init
+```
+
+A sikeres inicializálás után hozd létre az erőforrásokat:
+
+```
+terraform apply
+```
+
+FONTOS: Windows rendszeren hozzá kell adni a terraform.exe-t a környezeti változókhoz!
+
 ### Prometheus és Grafana
 
 Navigálj el a következő mappába:
