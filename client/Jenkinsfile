@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    environment { NODEJS = 'node22' }
+
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+
+        stage('Install & Lint') {
+            steps {
+                dir('client') {
+                    nodejs(NODEJS) {
+                        sh 'npm ci'
+                        sh 'npm run lint || true'
+                    }
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t car-rental-client ./client'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker compose up -d --build client'
+            }
+        }
+    }
+}
