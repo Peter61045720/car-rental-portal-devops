@@ -76,3 +76,23 @@ Indítsd el a szükséges konténereket a **Docker Compose** segítségével! A 
 A Tool-ok közül mindenképp szükséged lesz egy `node22` nevű NodeJS-re.
 
 A CI/CD Pipeline kliens és szerver projekthez GitHub SCM segítségével készült. Mind a client, mind a server rendelkezik a saját Jenkinsfile-lal, ezeket kell megadni a pipeline-ok elkészítésekor.
+
+### Prometheus és Grafana
+
+Navigálj el a következő mappába:
+
+```
+cd infra\monitoring\
+```
+
+majd a Docker Compose segítségével indítsd el a konténereket:
+
+```
+docker compose up -d
+```
+
+A Prometheus ezen a címen lesz elérhető: `localhost:9090`
+
+A Grafana pedig ezen a címen: `localhost:3000` (user: `admin`, password: `admin`)
+
+A szerver projekt által használt metrikák: `http://localhost:5000/metrics`

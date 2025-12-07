@@ -11,6 +11,7 @@ import passport from 'passport';
 import cors from 'cors';
 import { connectToDatabase } from './config/database';
 import './config/passport';
+import client from 'prom-client';
 
 dotenv.config();
 const { ATLAS_URI, SESSION_SECRET, PORT, IONIC_PORT } = process.env;
@@ -22,8 +23,20 @@ if (!ATLAS_URI) {
 
 const app = express();
 
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+
 app.get('/', (req: Request, res: Response) => {
   res.status(200).send('Server is ready');
+});
+
+app.get('/metrics', async (req: Request, res: Response) => {
+  try {
+    res.set('Content-Type', register.contentType);
+    res.end(await register.metrics());
+  } catch (err) {
+    res.status(500).end(err);
+  }
 });
 
 app.use(express.json());
