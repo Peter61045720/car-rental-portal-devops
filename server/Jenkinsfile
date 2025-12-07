@@ -20,13 +20,21 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t car-rental-server ./server'
+                sh 'docker build -t car-rental-server:latest ./server'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker compose up -d --build server'
+                sh '''
+                    docker rm -f car-rental-server || true
+
+                    docker run -d \
+                        --name car-rental-server \
+                        -p 5000:5000 \
+                        --env-file server/.env \
+                        car-rental-server:latest
+                '''
             }
         }
     }

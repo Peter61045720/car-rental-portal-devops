@@ -1,8 +1,4 @@
-# EN: Car Rental Portal
-
-_soon..._
-
-# HU: Autóbérlés szolgáltató platform
+# Autóbérlés szolgáltató platform
 
 ## Szükséges eszközök
 
@@ -14,50 +10,69 @@ https://code.visualstudio.com/download
 
 https://nodejs.org/en/download
 
-### Ionic CLI
+### Docker Desktop (Windows)
+
+https://www.docker.com/products/docker-desktop/
+
+### Terraform
+
+https://developer.hashicorp.com/terraform/install
+
+## Felhasznált eszközök
+
+Windows eszközön mindenképp indítsd el a Docker Desktop alkalmazást, hogy működjenek a lenti eszközök!
+
+### Docker
+
+Szerver projekt: lépj a server mappába, majd
 
 ```
-npm install -g @ionic/cli
+docker build -t car-rental-portal-server .
 ```
 
-## Az alkalmazás futtatása
-
-### Szerver
-
-Navigálj a `server` mappába:
+és:
 
 ```
-cd server
+docker run -it -p 5000:5000 --rm car-rental-portal-server
 ```
 
-Telepítsd a szükséges függőségeket:
+a `localhost:5000` címen lesz elérhető a szerver
+
+Kliens projekt: lépj a client mappába, majd
 
 ```
-npm install
+docker build -t car-rental-portal-client .
 ```
 
-Indítsd el a szervert:
+majd:
 
 ```
-npm run start
+docker run -it -p 8100:8100 --rm car-rental-portal-client
 ```
 
-### Kliens
+a `localhost:8100` címen lesz elérhető a kliens
 
-Nyiss meg egy új terminált vagy ablakot, és navigálj a `client` mappába:
+### Docker Compose
 
-```
-cd client
-```
-
-Telepítsd a szükséges függőségeket:
+A gyökérkönyvtárból futtasd:
 
 ```
-npm install
+docker compose up --build
 ```
 
-Indítsd el a kliens alkalmazást, ami majd a `http://localhost:8100` cím alatt lesz elérhető:
+az így elindított konténerek leállítása:
 
 ```
-ionic serve
+docker compose down
 ```
+
+### Jenkins
+
+Indítsd el a szükséges konténereket a **Docker Compose** segítségével! A `localhost:8080` címen lesz elérhető a Jenkins.
+
+- Készíts egy helyi fiókot, ideiglenes admin jelszó helye: `./infra/jenkins/jenkins_home/secrets/initialAdminPassword`
+- Vagy lépj be a `jenkins` felhasználónévvel és `jenkins` jelszóval.
+
+A Tool-ok közül mindenképp szükséged lesz egy `node22` nevű NodeJS-re.
+
+A CI/CD Pipeline kliens és szerver projekthez GitHub SCM segítségével készült. Mind a client, mind a server rendelkezik a saját Jenkinsfile-lal, ezeket kell megadni a pipeline-ok elkészítésekor.

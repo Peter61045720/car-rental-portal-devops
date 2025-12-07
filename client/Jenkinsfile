@@ -20,13 +20,21 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t car-rental-client ./client'
+                sh 'docker build -t car-rental-client:latest ./client'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker compose up -d --build client'
+                sh '''
+                    docker rm -f car-rental-client || true
+
+                    docker run -d \
+                        --name car-rental-client \
+                        -p 8100:8100 \
+                        -e API_URL=http://car-rental-server:5000 \
+                        car-rental-client:latest
+                '''
             }
         }
     }
