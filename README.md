@@ -120,3 +120,26 @@ A Prometheus ezen a címen lesz elérhető: `localhost:9090`
 A Grafana pedig ezen a címen: `localhost:3000` (user: `admin`, password: `admin`)
 
 A szerver projekt által használt metrikák: `http://localhost:5000/metrics`
+
+### nginx
+
+A gyökér mappában található Docker Compose futtatása után a következő címekről is elérhető lesz az alkalmazás:
+
+- `localhost` (kliens projekt)
+- `localhost:80` (kliens projekt)
+- `http://localhost/api/cars` (szerver projekt, autók megtekintése)
+
+Egyedi url kipróbálása:
+
+Windows rendszeren hosts bővítése a következő helyen lehetséges:
+
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+
+Ezekkel a sorokkal bővítsük:
+
+```
+127.0.0.1   car-rental-portal
+127.0.0.1   www.car-rental-portal
+```

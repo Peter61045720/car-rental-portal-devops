@@ -41,6 +41,20 @@ services:
     networks:
       - car-rental-network
 
+  nginx:
+    build:
+      context: ./infra/nginx
+      dockerfile: Dockerfile
+    container_name: car-rental-nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+      - client
+    networks:
+      - car-rental-network
+    restart: unless-stopped
+
 volumes:
   jenkins_home:
 
